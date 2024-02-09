@@ -29,12 +29,56 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         $this->routes(function () {
-            Route::middleware('api')
-                ->prefix('api')
-                ->group(base_path('routes/api.php'));
 
-            Route::middleware('web')
-                ->group(base_path('routes/web.php'));
+            $subdomain_mode = env('SUBDOMAIN_MODE', FALSE);
+            $config_domains = config('domain.route');
+
+            foreach ($config_domains as $middleware => $config) {
+                [
+                    'domain' => $domain,
+                    'file' => $file,
+                    'name' => $name,
+                    'prefix' => $prefix,
+                    'namespace' => $namespace,
+                ] = $config;
+
+                $route = Route::middleware($middleware);
+
+                if (!empty($namespace)) {
+                    $route->namespace("App\\Http\\Controllers\\" . $namespace);
+                } else {
+                    $route->namespace("App\\Http\\Controllers");
+                }
+
+                if (!empty($name)) {
+                    $route->name($name);
+                }
+
+                if ($subdomain_mode) {
+                    $route->domain($domain);
+                } else {
+                    $route->prefix($prefix);
+                }
+
+                $route->group($file);
+            }
+
+            // Route::middleware('api')
+            //     ->prefix('api')
+            //     ->group(base_path('routes/api.php'));
+
+            // Route::middleware('admin')
+            //     ->prefix('admin')
+            //     ->group(base_path('routes/admin.php'));
+
+            // Route::middleware('web')
+            //     ->group(base_path('routes/web.php'));
+
+            // Route::middleware('admin')
+            //     ->domain('admin.laravel-10-tailwind-based.test')
+            //     // ->prefix('admin')
+            //     ->group(base_path('routes/admin.php'));
+
         });
     }
 }
