@@ -9,9 +9,11 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable
+class Admin extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
+    protected $table = 'users';
+    protected $guard = 'admin';
 
     /**
      * The attributes that are mass assignable.
@@ -43,14 +45,4 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-
-    const TYPE_ADMIN = 'admin';
-    public function scopeIsTypeAdmin()
-    {
-        if ($this->type == self::TYPE_ADMIN) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 }
