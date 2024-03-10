@@ -2,6 +2,8 @@
 
 @section('content')
 <h1>ashavsbas</h1>
+<br><br><br><br>
+@dump(Auth::user())
 
 asad
 

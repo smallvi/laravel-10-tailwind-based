@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Module;
 use App\Helpers\Status;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
@@ -84,7 +85,7 @@ class ModuleRolePermissionSeeder extends Seeder
                         'action' => ['create', 'read', 'update', 'delete']
                     ],
                     [
-                        'name' => 'setting',
+                        'name' => 'admin',
                         'action' => ['create', 'read', 'update']
                     ],
                 ]

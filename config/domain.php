@@ -15,7 +15,7 @@ return [
         'admin' => [
             'domain' =>  'admin.' . env('MAIN_DOMAIN'),
             'file' => base_path('routes/admin.php'),
-            'name' => 'admin',
+            'name' => 'admin' . '.',
             'prefix' => 'admin',
             'namespace' => 'Admin'
         ],

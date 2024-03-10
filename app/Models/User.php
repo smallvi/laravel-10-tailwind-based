@@ -18,6 +18,8 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    protected $guard_name = 'admin';
+
     protected $fillable = [
         'name',
         'email',
@@ -52,5 +54,10 @@ class User extends Authenticatable
         } else {
             return false;
         }
+    }
+
+    public function scopeAdmin($query)
+    {
+        return $query->where('type', self::TYPE_ADMIN);
     }
 }
